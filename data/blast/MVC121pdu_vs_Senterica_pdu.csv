@@ -1,0 +1,5 @@
+query,sseqid,pident,length,mismatc,gapopen,qstart,qend,sstart,send,evalue,bitscore
+MVC121_M1_island,salmonella_pdu_operon,77.491,10067,2087,76,22,9972,19,10022,0,7758
+MVC121_M1_island,salmonella_pdu_operon,74.036,6486,1630,24,10388,16833,10438,16909,0,4046
+MVC121_M1_island,salmonella_pdu_operon,76.033,242,58,0,8638,8879,2458,2699,3.00E-45,176
+MVC121_M1_island,salmonella_pdu_operon,74.79,238,56,2,2458,2693,8657,8892,9.82E-39,154

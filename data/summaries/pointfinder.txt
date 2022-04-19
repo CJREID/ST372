@@ -1,0 +1,49 @@
+name	Mutation	Nucleotide change	Amino acid change	Resistance	PMID
+53438	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+AA25	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+J25	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+MVAST0896	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+MVAST2992	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+MVAST2992	rpoB p.H526Y	CAC -> TAC	H -> Y	Rifampicin	3050121
+MVAST6839	gyrA p.D87Y	GAC -> TAC	D -> Y	Nalidixic acid,Ciprofloxacin	12654733
+SRR10126810	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR10126812	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR10230841	ampC promoter n.-32T>A	T -> A	Promoter mutations	ampicillin,ampicillin+clavulanic acid,amoxicillin,amoxicillin+clavulanic acid,cefixime,cefotaxime,cefoxitin,ceftazidime,piperacillin	21653764
+SRR10597531	gyrA p.D87G	GAC -> GGC	D -> G	Nalidixic acid,Ciprofloxacin	12654733
+SRR10597532	gyrA p.D87G	GAC -> GGC	D -> G	Nalidixic acid,Ciprofloxacin	12654733
+SRR10597533	gyrA p.D87G	GAC -> GGC	D -> G	Nalidixic acid,Ciprofloxacin	12654733
+SRR11080870	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR11658535	folP p.P64S	CCA -> TCA	P -> S	Sulfamethoxazole	9449266
+SRR11658586	folP p.P64S	CCA -> TCA	P -> S	Sulfamethoxazole	9449266
+SRR11668382	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR11668382	parC p.S80I	AGC -> ATT	S -> I	Nalidixic acid,Ciprofloxacin	8851598
+SRR11668382	parE p.I355T	ATC -> ACC	I -> T	Nalidixic acid,Ciprofloxacin	28598203
+SRR12056274	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR12056274	gyrA p.D87N	GAC -> AAC	D -> N	Nalidixic acid,Ciprofloxacin	12654733
+SRR12056274	parC p.S80R	AGC -> AGA	S -> R	Nalidixic acid,Ciprofloxacin	8851598
+SRR12056274	parC p.E84A	GAA -> GCA	E -> A	Nalidixic acid,Ciprofloxacin	20638608
+SRR12075376	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR12387684	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR12509139	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR12744027	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR12744053	gyrA p.D87N	GAC -> AAC	D -> N	Nalidixic acid,Ciprofloxacin	12654733
+SRR12744053	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR12744070	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR12991184	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR5642062	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR6376578	ampC promoter n.-32T>A	T -> A	Promoter mutations	ampicillin,ampicillin+clavulanic acid,amoxicillin,amoxicillin+clavulanic acid,cefixime,cefotaxime,cefoxitin,ceftazidime,piperacillin	21653764
+SRR6742565	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR7690507	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR800432	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR8728085	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR8728086	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR8728086	ampC promoter n.-32T>A	T -> A	Promoter mutations	ampicillin,ampicillin+clavulanic acid,amoxicillin,amoxicillin+clavulanic acid,cefixime,cefotaxime,cefoxitin,ceftazidime,piperacillin	21653764
+SRR8738211	parE p.I355T	ATC -> ACC	I -> T	Nalidixic acid,Ciprofloxacin	28598203
+SRR8738218	parE p.I355T	ATC -> ACC	I -> T	Nalidixic acid,Ciprofloxacin	28598203
+SRR8868738	gyrA p.S83L	TCG -> TTG	S -> L	Nalidixic acid,Ciprofloxacin	8891148
+SRR8868859	gyrA p.D87N	GAC -> AAC	D -> N	Nalidixic acid,Ciprofloxacin	12654733
+SRR9016900	gyrA p.D87G	GAC -> GGC	D -> G	Nalidixic acid,Ciprofloxacin	12654733
+SRR9114555	ampC promoter n.-32T>A	T -> A	Promoter mutations	ampicillin,ampicillin+clavulanic acid,amoxicillin,amoxicillin+clavulanic acid,cefixime,cefotaxime,cefoxitin,ceftazidime,piperacillin	21653764
+SRR9301059	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
+SRR9831357	gyrA p.D87N	GAC -> AAC	D -> N	Nalidixic acid,Ciprofloxacin	12654733
+SRR9997955	16S (rrsB) r.1064G>C	G -> C	RNA mutations	Spectinomycin	8127669
