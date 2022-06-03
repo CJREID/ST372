@@ -46,7 +46,7 @@ for (file in infiles){
 }
 
 # Read in metadata
-meta <- read_delim("data/meta/ST372_Metadata_edited.csv", delim = ",") %>% 
+meta <- read_delim("data/meta/ST372_Metadata_260522.csv", delim = ",") %>% 
   mutate(Source = gsub("Companion Animal", "Canine", Source))
 
 ####-----PROCESS ABRICATE DATA-----####
@@ -154,18 +154,18 @@ H_type <- raw_sero %>% select(Name = last_col(), Database, Serotype)%>%
 serotype <- left_join(H_type, O_type) %>% 
   mutate(O_type = case_when(is.na(O_type) ~ "ONT", TRUE ~ O_type)) %>%
   select(Name, O_type, H_type) %>%
-  mutate(Serotype = paste(O_type, H_type, sep = ":"))
+  mutate(`OH Type` = paste(O_type, H_type, sep = ":"))
 
 
 # Split into types with 10 or more, and less than 10 representatives
-major_sero <- serotype %>% select(Name, Serotype) %>% group_by(Serotype) %>% filter(n() >= 10)
-minor_sero <- serotype %>% select(Name, Serotype) %>% group_by(Serotype) %>% filter(n() < 10)
+major_sero <- serotype %>% select(Name, `OH Type`) %>% group_by(`OH Type`) %>% filter(n() >= 10)
+minor_sero <- serotype %>% select(Name, `OH Type`) %>% group_by(`OH Type`) %>% filter(n() < 10)
 
 # Designate types with less than 10 as "Other"
-minor_sero$Serotype <- "Other OH"
+minor_sero$`OH Type` <- "Other OH"
 
 # Stick them back together
-serotype_simple <- rbind(major_sero, minor_sero) %>% select(Name, Serotype_simple = Serotype)
+serotype_simple <- rbind(major_sero, minor_sero) %>% select(Name, OH_simple = `OH Type`)
 
 ####-----PROCESS FIMH DATA-----####
 # Read in raw fimH data and select the useful columns
@@ -372,13 +372,13 @@ tree_meta <- meta %>%
          IncF_RST,
          pUTI89,
          fimH = fimH_simple,
-         Serotype = Serotype_simple)
+         `OH Type` = OH_simple)
 
 # Get names
 tree_names <- tree_meta$Name
 
 # Refine tree metadata
-tree_meta <- tree_meta %>% select(Cluster, Source, Continent, Serotype, fimH)
+tree_meta <- as.data.frame(tree_meta %>% select(Cluster, Source, Continent, `OH Type`, fimH))
 
 # Assign names as row names (for gheatmap function)
 rownames(tree_meta) <- tree_names
@@ -415,8 +415,8 @@ names(year_clrs) <- sort(year_vars)
 year_clrs["ND"] <- "#dbdbdb"
 
 # Colours for serotypes
-OH_vars <- unique(meta$Serotype_simple)
-OH_clrs <- colorRampPalette(brewer.pal(8, "Set2"))(length(unique(meta$Serotype_simple)))
+OH_vars <- unique(meta$OH_simple)
+OH_clrs <- colorRampPalette(brewer.pal(8, "Set2"))(length(unique(meta$OH_simple)))
 names(OH_clrs) <- OH_vars
 
 # Colours for fimH
@@ -434,7 +434,7 @@ fig1a <- ggplot(meta, aes(Continent)) +
   geom_text(stat='count', aes(label=..count..), vjust=-0.3, size = 3) +
   scale_fill_manual(name = "Source", values = source_clrs) +
   scale_x_discrete(name = "Continent", labels = function(x) str_wrap(x, width = 10))+
-  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 270), n.breaks = 8) +
+  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 330), n.breaks = 9) +
   theme_classic()+
   theme(axis.text.x = element_text(color = "grey20", size = 9, vjust = , face = "plain"),
         axis.text.y = element_text(color = "grey20", size = 10, vjust = ,face = "plain"),  
@@ -452,7 +452,7 @@ fig1b <- ggplot(meta, aes(Cluster)) +
   geom_text(stat='count', aes(label=..count..), vjust=-.3, size = 3) +
   scale_fill_manual(name = "Source", values = source_clrs) +
   scale_x_discrete(name = "Cluster", labels = function(x) str_wrap(x, width = 10))+
-  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 220), n.breaks = 8) +
+  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 220), n.breaks = 7) +
   theme_classic()+
   theme(axis.text.x = element_text(color = "grey20", size = 10, vjust = , face = "plain"),
         axis.text.y = element_text(color = "grey20", size = 10, vjust = ,face = "plain"),  
@@ -466,11 +466,11 @@ fig1b <- ggplot(meta, aes(Cluster)) +
 
 # Plot sources stratified by serotypes
 fig1c <- ggplot(meta, aes(Source)) +
-  geom_bar(aes(fill = Serotype_simple))+
+  geom_bar(aes(fill = OH_simple))+
   geom_text(stat='count', aes(label=..count..), vjust=-.3, size = 3) +
-  scale_fill_manual(name = "Serotype", values = OH_clrs) +
+  scale_fill_manual(name = "OH Type", values = OH_clrs) +
   scale_x_discrete(name = "Source", labels = function(x) str_wrap(x, width = 10))+
-  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 330), n.breaks = 8) +
+  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 330), n.breaks = 9) +
   theme_classic()+
   theme(axis.text.x = element_text(color = "grey20", size = 9, vjust = , face = "plain"),
         axis.text.y = element_text(color = "grey20", size = 10, vjust = ,face = "plain"),  
@@ -484,11 +484,11 @@ fig1c <- ggplot(meta, aes(Source)) +
 
 # Plot clusters stratified by serotypes
 fig1d <- ggplot(meta, aes(Cluster)) +
-  geom_bar(aes(fill = Serotype_simple))+
+  geom_bar(aes(fill = OH_simple))+
   geom_text(stat='count', aes(label=..count..), vjust=-.3, size = 3) +
-  scale_fill_manual(name = "Serotype", values = OH_clrs) +
+  scale_fill_manual(name = "OH Type", values = OH_clrs) +
   scale_x_discrete(name = "Cluster", labels = function(x) str_wrap(x, width = 10))+
-  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 220), n.breaks = 8) +
+  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 220), n.breaks = 7) +
   theme_classic()+
   theme(axis.text.x = element_text(color = "grey20", size = 10, vjust = , face = "plain"),
         axis.text.y = element_text(color = "grey20", size = 10, vjust = ,face = "plain"),  
@@ -506,7 +506,7 @@ fig1e <- ggplot(meta, aes(Source)) +
   geom_text(stat='count', aes(label=..count..), vjust=-.3, size = 3) +
   scale_fill_manual(name = "fimH", values = fim_clrs) +
   scale_x_discrete(name = "Source", labels = function(x) str_wrap(x, width = 10))+
-  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 330), n.breaks = 8) +
+  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 330), n.breaks = 9) +
   theme_classic()+
   theme(axis.text.x = element_text(color = "grey20", size = 9, vjust = , face = "plain"),
         axis.text.y = element_text(color = "grey20", size = 10, vjust = ,face = "plain"),  
@@ -524,7 +524,7 @@ fig1f <- ggplot(meta, aes(Cluster)) +
   geom_text(stat='count', aes(label=..count..), vjust=-.3, size = 3) +
   scale_fill_manual(name = "fimH", values = fim_clrs) +
   scale_x_discrete(name = "Cluster", labels = function(x) str_wrap(x, width = 10))+
-  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 220), n.breaks = 8) +
+  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 220), n.breaks = 7) +
   theme_classic()+
   theme(axis.text.x = element_text(color = "grey20", size = 10, vjust = , face = "plain"),
         axis.text.y = element_text(color = "grey20", size = 10, vjust = ,face = "plain"),  
@@ -566,7 +566,7 @@ ggsave("Figure1.metadata.pdf",
        path = "outputs/figures/", 
        device = "pdf", 
        width= 297, 
-       height = 180, 
+       height = 180,
        unit ="mm", 
        dpi = 300)
 
@@ -575,7 +575,7 @@ ggsave("Figure1.metadata.pdf",
 tree.heat <- rotate_tree(ggtree(tree, layout = "fan", open.angle = 7, size = .2),91)
 
 # Plot tree and metadata
-fig2 <- gheatmap(tree.heat, 
+fig2 <- gheatmap(tree.heat,
                  tree_meta, 
                  width = .2,
                  font.size = 1.7,
@@ -586,7 +586,7 @@ fig2 <- gheatmap(tree.heat,
                  hjust = 0.5,
                  color = NULL) +
   scale_fill_manual(name = "Data", values = tree_vars) + 
-  theme(legend.position = "none",
+  theme(legend.position = "right",
         legend.box = "vertical",
         legend.key.size = unit(5, "mm"),
         legend.title = element_text(size=12),
@@ -692,10 +692,6 @@ paircast_mat.unique <- paircast_mat.unique[,colord.unique]
 
 # Reset 100 values as NAs
 paircast_mat.unique[paircast_mat.unique == 100] <- NA
-
-# Define country colours for heatmap annotation
-country_clrs <- colorRampPalette(brewer.pal(8, "Set1"))(length(snp_countries))
-names(country_clrs) <- snp_countries
 
 # Combine all colours for heatmap annotation
 anno_colors <- list(Source = source_clrs,
@@ -864,7 +860,7 @@ names(clusterM_map) <- gsub("_group.*", "_b", names(clusterM_map))
 
 # Create metadata for downstream heatmap
 clusterM_meta <- left_join(meta %>% 
-                             select(Name, Cluster, Source, Serotype = Serotype_simple), 
+                             select(Name, Cluster, Source, `OH Type` = OH_simple), 
                            clusterM_map %>% 
                              mutate(Name = rownames(clusterM_map)) %>% 
                              select(Name, everything()))
@@ -991,7 +987,7 @@ MGLJ_tree_meta <- left_join(MGLJ_tree_meta, clusterJ_meta)
 tree_names <- MGLJ_tree_meta$Name
 
 # Remove Name column
-MGLJ_tree_meta <- MGLJ_tree_meta %>%select(-Name)
+MGLJ_tree_meta <- as.data.frame(MGLJ_tree_meta) %>% select(-Name)
 
 # Make rownames sequence names
 rownames(MGLJ_tree_meta) <- tree_names
@@ -1295,284 +1291,9 @@ dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs
 dev.off()
 
 
-####-----HEATMAP PROCESSING-----####
-# Split ABRicate gene hits into their functional groups
-# Get all the hits from CARD database and intI1 and intI2. Fix all the messy names. Filter out genes present in >90% of isolates. These are housekeeping
-# genes that sometimes mutate to confer AMR phenotypes but we are only concerned wiht acquired resistance genes
-args <- geno_meta %>%
-  select(all_of(meta_cols), starts_with("card"), contains("intI")) %>%
-  rename_with(~ gsub("card_", "", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub("Escherichia_coli_", "", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub("_beta-lactamase", "", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub("(", "_", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub(")", "", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub("PC1__", "PC1_", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub("EC_custom_intI1.*", "intI1", .x)) %>%
-  rename_with(~ gsub("EC_custom_intI2.*", "intI2", .x)) %>%
-  rename_with(~ gsub("Shigella_flexneri_chloramphenicol_acetyltransferase", "catA1", .x, fixed = TRUE)) %>% 
-  select(where(is.character), where( ~ is.integer(.x) && sum(.x) <= .9*nrow(geno_meta))) %>%
-  select(sort(names(.)), -ugd) %>%
-  relocate(all_of(meta_cols), contains("intI"))
-
-# Calculate total carriage of each gene in the collection
-arg_totals <- t(args %>% summarise(across(where(is.integer), sum)))
-
-arg_totals <- as_tibble(arg_totals, rownames = "Gene", .name_repair = "minimal") %>% 
-  rename(Total = 2) %>% 
-  mutate(Percentage = round(Total/nrow(geno_meta)*100, 2))
-
-# Get hits from VFDB
-vags <- geno_meta %>% 
-  select(all_of(meta_cols), starts_with("vfdb")) %>%
-  rename_with(~ gsub("vfdb_", "", .x))
-
-# Select additional virulence genes from our custom database
-custom_vags <- geno_meta %>% 
-  select(Name, contains("EC_custom")) %>%
-  rename_with(~ gsub("EC_custom_", "", .x, fixed = TRUE)) %>%
-  mutate(usp = as.integer(rowSums(select(.,starts_with("usp"))))) %>%
-  select(-starts_with("usp_")) %>%
-  mutate(eitA = as.integer(rowSums(select(.,starts_with("eitA"))))) %>%
-  select(-starts_with("eitA_")) %>% 
-  select(Name,
-         starts_with(c("cba", "cbi", "cjr", 
-                       "cva", "cvi","eit",
-                       "fecA", "hek", "hyl",
-                       "iha","iss", "merA",
-                       "ompT", "silA",
-                       "terA", "traT", "usp"))) %>%
-  rename_with(~ gsub("_[A-Z]{1,2}.*", "", .x)) %>%
-  rename_with(~ gsub("_pAPEC-O1-ColBM", "", .x, fixed =TRUE)) %>%
-  rename_with(~ gsub("_pUTI89", "", .x, fixed =TRUE)) %>%
-  rename_with(~ gsub("_type3", "", .x, fixed =TRUE)) %>%
-  rename_with(~ gsub("_|VFG1539", "", .x, fixed =TRUE)) %>%
-  rename_with(~ gsub("_chromosomal", "_1", .x, fixed =TRUE)) %>%
-  rename_with(~ gsub("_episomal", "_2", .x, fixed =TRUE))
-
-# Join VFDB and custom hits and filter genes in less than 5% of strains
-vags <- left_join(vags, custom_vags) %>% select(sort(names(.))) %>%
-  relocate(all_of(meta_cols)) %>% 
-  select(where(is.character), where( ~ is.integer(.x) && sum(.x) >= .05*nrow(vags)))
-
-# Filter out genes we don't want due to rarity
-# cps, fae, nle, yag
-# vags_preheat <- vags %>% select(-starts_with(c("cps", "fae", "nle", "yag")))
-
-# Split out operons we want to filter to marker genes
-# clbA, entB, escC, espL*, espX*, espY*, fepA, fimH, gspM, shuA, tssA, ybtA
-# Select the markers
-vag_operon_markers <- vags %>% 
-  select(Name, clbA, entB, starts_with("espY"), fepA, fimH, gspM,ybtA)
-
-# Remove the operons to be replaced with markers
-vags_preheat <- vags %>% 
- select(-starts_with(c("clb", "ent", "esc", "esp", "fep", "fim", "gsp", "shu", "tss", "ybt")))
-
-# Rejoin the markers and filter out genes present in less than 10% of genomes
-vags_preheat <- left_join(vags_preheat, vag_operon_markers) %>% 
-   select(where(is.character), where( ~ is.integer(.x) && sum(.x) >= .10*nrow(vags))) %>% 
-   select(sort(names(.))) %>%
-   relocate(all_of(meta_cols))
-
-# Show differences in VAGs when filtering out columns by total presence
-# vag_cols <- names(vags)
-# vag_cols5 <- names(vags %>% select(where(is.character), where( ~ is.integer(.x) && sum(.x) >= .05*nrow(vags))))
-# vag_cols10 <- names(vags %>% select(where(is.character), where( ~ is.integer(.x) && sum(.x) >= .1*nrow(vags))))
-# 
-# setdiff(vag_cols, vag_cols5)
-# setdiff(vag_cols5, vag_cols10)
-
-# Calculate total carriage of each gene in the collection
-vag_totals <- t(vags %>% summarise(across(where(is.integer), sum)))
-vag_totals <- as_tibble(vag_totals, rownames = "Gene", .name_repair = "minimal") %>% 
-  rename(Total = 2) %>% 
-  mutate(Percentage = round(Total/nrow(geno_meta)*100, 2))
-
-# Extract mobile genetic elements from the ISFinder database. NB: this data is not covered in the paper
-mges <- geno_meta %>% 
-  select(all_of(meta_cols), starts_with("ISfinder_")) %>%
-  rename_with(~ gsub("ISfinder_Feb_2020_", "", .x)) %>%
-  rename_with(~ gsub(":.*", "", .x))
-
-# Extract plasmid related genes from the plasmidfinder database and tidy up messy names
-plas <- geno_meta %>% 
-  select(all_of(meta_cols), starts_with("plasmidfinder")) %>%
-  rename_with(~ gsub("plasmidfinder_", "", .x)) %>%
-  mutate(IncBOKZ = as.integer(rowSums(select(.,starts_with("IncB"))))) %>%
-  select(-starts_with("IncB/")) %>%
-  mutate(IncX1 = as.integer(rowSums(select(.,starts_with("IncX1"))))) %>%
-  select(-starts_with("IncX1_")) %>%
-  mutate(IncFII = as.integer(rowSums(select(.,starts_with("IncFII"))))) %>%
-  select(-starts_with("IncFII("), -starts_with("IncFII_")) %>%
-  mutate(IncFIA = as.integer(rowSums(select(.,starts_with("IncFIA"))))) %>%
-  select(-starts_with("IncFIA("), -starts_with("IncFIA_")) %>%
-  mutate(IncFIB = as.integer(rowSums(select(.,starts_with("IncFIB"))))) %>%
-  select(-starts_with("IncFIB(")) %>%
-  rename_with(~ gsub("_[0-9].*$", "", .x)) %>%
-  rename_with(~ gsub("(", "_", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub(")", "", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub("/", "", .x, fixed = TRUE)) %>%
-  rename_with(~ gsub("_FII", "", .x, fixed = TRUE)) %>%
-  select(sort(names(.))) %>%
-  relocate(all_of(meta_cols))
-
-# Calculate total carriage of each gene in the collection
-plas_totals <- t(plas %>% summarise(across(where(is.integer), sum)))
-plas_totals <- as_tibble(plas_totals, rownames = "Gene") %>% 
-  rename(Total = 2) %>% 
-  mutate(Percentage = round(Total/nrow(geno_meta)*100, 2))
-
-# Summary of IncF RSTs in the collection
-# F_RST_totals <- geno_meta %>% 
-#   filter(`F Plasmid` != "No F Plasmid") %>% 
-#   group_by(`F Plasmid`, ColV, pUTI89) %>%
-#   summarise(Total = n()) %>% 
-#   mutate(Percentage = round(Total/nrow(geno_meta)*100, 2))
-
-# Put dataframes into a list so they can be converted to matrices for heatmap visualisation
-gene_list <- list(args = args, vags = vags_preheat, mges = mges, plas = plas)
-
-# Loop that converts the gene screening dataframes into binary heatmaps named `geneprefix_heat` e.g args heatmap is called args_heat
-for (f in 1:length(gene_list)){
-  heat <- gene_list[[f]]
-  heat <- heat %>% select(where(is_integer)) %>% as.matrix()
-  rownames(heat) <- gene_list[[f]]$Name
-  heat[is.na(heat)] <- 0
-  heat[heat >= 1] <- "Present"
-  heat[heat == 0] <- "Absent"
-  heat <- as.data.frame(cbind(heat, meta %>% select(Source, Cluster)))
-  heat <- heat %>% select(Source, Cluster, everything())
-  assign(paste(names(gene_list[f]), "heat", sep="_"), heat)
-}
-
-# Additional colours for visualisation
-heat_clrs <- c("Present" = "#000000E6", "Absent" = "#ededed", "Yes" = "#df03fc","No" = "white")
-
-####-----CLUSTERS VS ARG/VAGs-----####
-# Total ARGs
-args2 <- args %>% select(-intI1, -intI2) %>% 
-  mutate(`Total ARGs` = rowSums(across(where(is.integer)))) %>% 
-  select(Name, Source, Cluster, `Total ARGs`)
-
-# Average and maximum ARGs by Cluster
-args2 %>% group_by(Cluster) %>% summarise(`Average ARGs` = mean(`Total ARGs`)) %>% arrange(desc(`Average ARGs`))
-args2 %>% group_by(Cluster) %>% summarise(`Max ARGs` = max(`Total ARGs`)) %>% arrange(desc(`Max ARGs`))
-
-# Average ARGs by Source
-args2 %>% group_by(Source) %>% summarise(`Average ARGs` = mean(`Total ARGs`)) %>% arrange(desc(`Average ARGs`))
-
-# Total VAGs
-vags2 <- vags %>% mutate(`Total VAGs` = rowSums(across(where(is.integer)))) %>% 
-  select(Name, Source, Cluster, `Total VAGs`)
-
-# Average VAGs by Cluster
-vags2 %>% group_by(Cluster) %>% summarise(`Average VAGs` = mean(`Total VAGs`)) %>% arrange(desc(`Average VAGs`))
-
-# Average VAGs by Source
-vags2 %>% group_by(Source) %>% summarise(`Average VAGs` = mean(`Total VAGs`)) %>% arrange(desc(`Average VAGs`))
-
-
-####-----FIGURE S1-3 GENE HEATMAPS-----####
-# Alignment of gene presence/absence with tree and metadata
-# ggtree object for heatmap visualisation
-gene_heatmap_tree <- ggtree(tree, branch.length = "none") %<+% meta
-
-## AMR HEATMAP ##
-figS5 <- gheatmap(gene_heatmap_tree, 
-                     args_heat, 
-                     width = 30,
-                     font.size = 2,
-                     colnames_offset_x = 0.00001,
-                     colnames_offset_y = 2.2,
-                     colnames_position = "top",
-                     colnames_angle = 45,
-                     hjust = 0,
-                     color = NA) +
-  scale_fill_manual(name = "Data", values = c(heat_clrs, bap_clrs, source_clrs)) +
-  ylim(c(0,420)) +
-  theme(legend.key.size = unit(3, "mm"),
-        legend.title = element_text(),
-        legend.text = element_text(size = 6))
-
-## VIRULENCE HEATMAP ##
-figS6 <- gheatmap(gene_heatmap_tree, 
-                     vags_heat, 
-                     width = 30,
-                     font.size = 2,
-                     colnames_offset_x = 0.00001,
-                     colnames_offset_y = 2.2,
-                     colnames_position = "top",
-                     colnames_angle = 45,
-                     hjust = 0,
-                     color = NA) +
-  scale_fill_manual(name = "Data", values = c(heat_clrs, bap_clrs, source_clrs)) +
-  ylim(c(0,420)) +
-  theme(legend.key.size = unit(3, "mm"),
-        legend.title = element_text(),
-        legend.text = element_text(size = 6))
-
-## PLASMID REPLICON HEATMAP ##
-figS7 <- gheatmap(gene_heatmap_tree, 
-                     plas_heat, 
-                     width = 30,
-                     font.size = 2,
-                     colnames_offset_x = 0.00001,
-                     colnames_offset_y = 2.2,
-                     colnames_position = "top",
-                     colnames_angle = 45,
-                     hjust = 0,
-                     color = NA) +
-  scale_fill_manual(name = "Data", values = c(heat_clrs, bap_clrs, source_clrs)) +
-  ylim(c(0,420)) +
-  theme(legend.key.size = unit(3, "mm"),
-        legend.title = element_text(),
-        legend.text = element_text(size = 6))
-
-# Save Figure S5
-ggsave("FigureS5_ARG_heatmap.pdf",
-       figS5, 
-       path = "outputs/figures/", 
-       device = "pdf", 
-       width= 297, 
-       height = 210, 
-       unit ="mm", 
-       dpi = 300)
-
-# Save Figure S6
-ggsave("FigureS6_VAG_heatmap.pdf",
-       figS6, 
-       path = "outputs/figures/", 
-       device = "pdf", 
-       width= 297, 
-       height = 210, 
-       unit ="mm", 
-       dpi = 300)
-
-# Save Figure S7
-ggsave("FigureS7_plas_heatmap.pdf",
-       figS7, 
-       path = "outputs/figures/", 
-       device = "pdf", 
-       width= 297, 
-       height = 210, 
-       unit ="mm", 
-       dpi = 300)
-
 ####-----TABLES S1, S2, S3-----####
-## Process gene screening dataframes to generate Table S1
-S1_args <- args %>% select(Name, where(is.integer))
-S1_vags <- vags %>% select(Name, where(is.integer))
-S1_plas <- plas %>% select(Name, where(is.integer))
-S1_mges <- mges %>% select(Name, where(is.integer))
-
-# Join them together
-tableS1 <- left_join(S1_args, S1_vags)
-tableS1 <- left_join(tableS1, S1_plas)
-tableS1 <- left_join(tableS1, S1_mges)
-tableS1 <- left_join(meta %>% rename(fimH_allele =fimH), tableS1)
-
 # Write to file
-write_csv(tableS1, "outputs/data/TableS1_fulldata.csv")
+write_csv(meta, "outputs/data/TableS1_meta.csv")
 
 ## Table S2 genes over-represented in fastbaps clusters
 tableS2 <- rbind(cluster_M_over, cluster_G_over)
