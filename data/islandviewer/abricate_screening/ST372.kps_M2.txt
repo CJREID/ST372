@@ -57,7 +57,7 @@ MVAST3050.fasta	contig00011	153960	155574	-	MVC18_M2_island_kps	14389-16003/4330
 MVAST3050.fasta	contig00011	161422	169300	-	MVC18_M2_island_kps	1-7879/43301	===...../......	3-Oct	18.18	97.81	kps_M2		MVC18_M2_island_kps  (43301 bp)	
 MVAST3050.fasta	contig00023	9167	9363	+	MVC18_M2_island_kps	21333-21529/43301	.......=.......	0/0	0.45	77.67	kps_M2		MVC18_M2_island_kps  (43301 bp)	
 MVAST4250.fasta	contig00021	9167	9363	+	MVC18_M2_island_kps	21333-21529/43301	.......=.......	0/0	0.45	77.67	kps_M2		MVC18_M2_island_kps  (43301 bp)	
-MVAST4923.fasta	contig00025	9167	9363	+	MVC18_M2_island_kps	21333-21529/43301	.......=.......	0/0	0.45	77.67	kps_M2		MVC18_M2_island_kps  (43301 bp)	
+MVAST4963.fasta	contig00025	9167	9363	+	MVC18_M2_island_kps	21333-21529/43301	.......=.......	0/0	0.45	77.67	kps_M2		MVC18_M2_island_kps  (43301 bp)	
 MVAST5048.fasta	contig00006	311715	340721	-	MVC18_M2_island_kps	14291-43300/43301	....====/======	5-Jul	66.98	98.46	kps_M2		MVC18_M2_island_kps  (43301 bp)	
 MVAST5048.fasta	contig00006	348002	355883	-	MVC18_M2_island_kps	1-7882/43301	===...../......	4-Oct	18.19	97.78	kps_M2		MVC18_M2_island_kps  (43301 bp)	
 MVAST5048.fasta	contig00021	9167	9363	+	MVC18_M2_island_kps	21333-21529/43301	.......=.......	0/0	0.45	77.67	kps_M2		MVC18_M2_island_kps  (43301 bp)	

@@ -582,9 +582,9 @@ H_type	fliC	H31	100.0	1668 / 1668	contig00006 len=278953 cov=21.7 corr=0 orignam
 O_type	wzy	O18	100.0	1191 / 1191	contig00019 len=68621 cov=22.8 corr=0 origname=NODE_19_length_68621_cov_22.830098_pilon sw=shovill-spades/1.0.9 date=20210127	63835..65025	GU299793	MVAST6839
 O_type	wzy	O18ac	100.0	1146 / 1146	contig00019 len=68621 cov=22.8 corr=0 origname=NODE_19_length_68621_cov_22.830098_pilon sw=shovill-spades/1.0.9 date=20210127	63880..65025	AB811603	MVAST6839
 O_type	wzx	O18ac	100.0	1248 / 1248	contig00019 len=68621 cov=22.8 corr=0 origname=NODE_19_length_68621_cov_22.830098_pilon sw=shovill-spades/1.0.9 date=20210127	62531..63778	GU299793	MVAST6839
-H_type	fliC	H31	100.0	1668 / 1668	contig00006 len=281784 cov=23.2 corr=0 origname=NODE_6_length_281784_cov_23.233104_pilon sw=shovill-spades/1.0.9 date=20210127	27232..28899	CP000247	MVAST4923
-O_type	wzx	O21	100.0	1236 / 1236	contig00001 len=497272 cov=23.6 corr=0 origname=NODE_1_length_497272_cov_23.622141_pilon sw=shovill-spades/1.0.9 date=20210127	468352..469587	EU694098	MVAST4923
-O_type	wzy	O21	100.0	1083 / 1083	contig00001 len=497272 cov=23.6 corr=0 origname=NODE_1_length_497272_cov_23.622141_pilon sw=shovill-spades/1.0.9 date=20210127	471876..472958	EU694098	MVAST4923
+H_type	fliC	H31	100.0	1668 / 1668	contig00006 len=281784 cov=23.2 corr=0 origname=NODE_6_length_281784_cov_23.233104_pilon sw=shovill-spades/1.0.9 date=20210127	27232..28899	CP000247	MVAST4963
+O_type	wzx	O21	100.0	1236 / 1236	contig00001 len=497272 cov=23.6 corr=0 origname=NODE_1_length_497272_cov_23.622141_pilon sw=shovill-spades/1.0.9 date=20210127	468352..469587	EU694098	MVAST4963
+O_type	wzy	O21	100.0	1083 / 1083	contig00001 len=497272 cov=23.6 corr=0 origname=NODE_1_length_497272_cov_23.622141_pilon sw=shovill-spades/1.0.9 date=20210127	471876..472958	EU694098	MVAST4963
 H_type	fliC	H31	100.0	1668 / 1668	contig00003 len=578309 cov=25.7 corr=2 origname=NODE_3_length_578309_cov_25.672977_pilon sw=shovill-spades/1.0.9 date=20210127	148650..150317	CP000247	SRR10535885
 O_type	wzx	O21	100.0	1236 / 1236	contig00001 len=649987 cov=29.2 corr=0 origname=NODE_1_length_649987_cov_29.182829_pilon sw=shovill-spades/1.0.9 date=20210127	27702..28937	EU694098	SRR10535885
 O_type	wzy	O21	99.91	1083 / 1083	contig00001 len=649987 cov=29.2 corr=0 origname=NODE_1_length_649987_cov_29.182829_pilon sw=shovill-spades/1.0.9 date=20210127	24331..25413	EU694098	SRR10535885

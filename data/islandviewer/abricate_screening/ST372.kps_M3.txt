@@ -67,7 +67,7 @@ MVAST3050.fasta	contig00011	153960	155574	-	MVAST6839_kps_island	15261-16875/441
 MVAST3050.fasta	contig00011	161422	169300	-	MVAST6839_kps_island	1-7879/44169	===............	0/0	17.84	97.21	kps_M3		MVAST6839_kps_island  (44169 bp)	
 MVAST3050.fasta	contig00023	9167	9363	+	MVAST6839_kps_island	22205-22401/44169	.......=.......	0/0	0.45	78.68	kps_M3		MVAST6839_kps_island  (44169 bp)	
 MVAST4250.fasta	contig00021	9167	9363	+	MVAST6839_kps_island	22205-22401/44169	.......=.......	0/0	0.45	78.68	kps_M3		MVAST6839_kps_island  (44169 bp)	
-MVAST4923.fasta	contig00025	9167	9363	+	MVAST6839_kps_island	22205-22401/44169	.......=.......	0/0	0.45	78.68	kps_M3		MVAST6839_kps_island  (44169 bp)	
+MVAST4963.fasta	contig00025	9167	9363	+	MVAST6839_kps_island	22205-22401/44169	.......=.......	0/0	0.45	78.68	kps_M3		MVAST6839_kps_island  (44169 bp)	
 MVAST5048.fasta	contig00006	311715	355883	-	MVAST6839_kps_island	1-44169/44169	===============	0/0	100	99.97	kps_M3		MVAST6839_kps_island  (44169 bp)	
 MVAST5048.fasta	contig00021	9167	9363	+	MVAST6839_kps_island	22205-22401/44169	.......=.......	0/0	0.45	78.68	kps_M3		MVAST6839_kps_island  (44169 bp)	
 MVAST5424.fasta	contig00002	311806	355974	-	MVAST6839_kps_island	1-44169/44169	===============	0/0	100	99.96	kps_M3		MVAST6839_kps_island  (44169 bp)	
