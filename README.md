@@ -2,7 +2,7 @@
 Scripts to replicate analysis performed on ST372 *E. coli* associated with the manuscript "Identification of genes influencing the evolution of *Escherichia coli* ST372 in dogs and humans" by Elankumaran *et al*, 2022.
 
 ## Overview
-The following repository allows conscientious readers of the manuscript to reproduce all the data processing, statistics and figures presented in the paper.
+The following repository allows conscientious readers of the manuscript to reproduce the data processing, statistics and (nearly all) figures presented in the paper.
 
 It comprises two directories: __`scripts`__ and __`data`__ (the contents of which should be self explanatory) and generates a __`data/outputs`__ folder with __`figures`__ and __`data`__ subdirectories.
 
