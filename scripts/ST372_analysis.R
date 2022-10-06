@@ -393,6 +393,10 @@ names(puti_clrs) <- rev(puti_vars)
 bap_vars <- unique(meta$Cluster)
 bap_clrs <- colorRampPalette(brewer.pal(12, "Set3"))(length(unique(meta$Cluster)))
 names(bap_clrs) <- bap_vars
+bap_clrs["M"] <- "#BE91BE"
+bap_clrs["G"] <- "#F5FBB4"
+bap_clrs["H"] <- "#8DD3C7"
+bap_clrs["E"] <- "#EB8E8B"
 
 # Colours for isolate source
 source_vars <- unique(meta$Source)
@@ -972,10 +976,10 @@ clusterJ_meta <- left_join(meta %>%
 
 ####-----FIGURE 4 SCOARY GENES WITH PHYLOGENY-------####
 # Create colours for presence+cluster association and absence
-heat_clrs_MGLJ <- c("PresentM" = "#8DD3C7", 
-                    "PresentG" = "#EB8E8B", 
-                    "PresentL" = "#A9A0B2", 
-                    "PresentJ" = "#D8C965",
+heat_clrs_MGLJ <- c("PresentM" = unname(bap_clrs[c("M")]), 
+                    "PresentG" = unname(bap_clrs[c("G")]), 
+                    "PresentL" = unname(bap_clrs[c("L")]), 
+                    "PresentJ" = unname(bap_clrs[c("J")]),
                     "Absent" = "#ededed")
 
 # Join the metadata and genes for each cluster
@@ -1016,6 +1020,55 @@ dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs
 
 # Save plot and dev off
 dev.off()
+
+####-----FIGURE S1 ALTERNATIVE METADATA SUMMARIES-----####
+## Fig S1a
+figS1a <- ggplot(meta, aes(OH_simple)) +
+  geom_bar(aes(fill = Source))+
+  geom_text(stat='count', aes(label=..count..), vjust=-.3, size = 3) +
+  scale_fill_manual(name = "Source", values = source_clrs) +
+  scale_x_discrete(name = "OH Type", labels = function(x) str_wrap(x, width = 10))+
+  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 180), n.breaks = 9) +
+  theme_classic()+
+  theme(axis.text.x = element_text(color = "grey20", size = 9, vjust = , face = "plain"),
+        axis.text.y = element_text(color = "grey20", size = 10, vjust = ,face = "plain"),  
+        axis.title.x = element_text(color = "grey20",vjust = , size = 12, face = "plain"),
+        axis.title.y = element_text(color = "grey20",vjust = , size = 12, face = "plain"),
+        legend.position = "none",
+        legend.box = "vertical",
+        legend.key.size = unit(3, "mm"),
+        legend.title = element_text(size =8),
+        legend.text = element_text(size = 6))
+
+figS1b <- ggplot(meta, aes(fimH_simple)) +
+  geom_bar(aes(fill = Source))+
+  geom_text(stat='count', aes(label=..count..), vjust=-.3, size = 3) +
+  scale_fill_manual(name = "Source", values = source_clrs) +
+  scale_x_discrete(name = "OH Type", labels = function(x) str_wrap(x, width = 10))+
+  scale_y_continuous(name = "Count", expand = c(0, 0), limits = c(0, 320), n.breaks = 9) +
+  theme_classic()+
+  theme(axis.text.x = element_text(color = "grey20", size = 9, vjust = , face = "plain"),
+        axis.text.y = element_text(color = "grey20", size = 10, vjust = ,face = "plain"),  
+        axis.title.x = element_text(color = "grey20",vjust = , size = 12, face = "plain"),
+        axis.title.y = element_text(color = "grey20",vjust = , size = 12, face = "plain"),
+        legend.position = "none",
+        legend.box = "vertical",
+        legend.key.size = unit(3, "mm"),
+        legend.title = element_text(size =8),
+        legend.text = element_text(size = 6))
+
+figS1 <- ggarrange(plotlist = list(figS1a, figS1b),
+                  nrow =1, align = "hv", legend = "right", common.legend = T)
+
+# Save as Figure S1
+ggsave("FigureS1.OH_fimH.pdf",
+       figS1, 
+       path = "outputs/figures/", 
+       device = "pdf", 
+       width= 297, 
+       height = 180,
+       unit ="mm", 
+       dpi = 300)
 
 ####-----ISLANDVIEWER PROCESSING----####
 #### pdu_G island ####
@@ -1170,14 +1223,14 @@ gheatmap(scoary_tree,
          width = 20,
          offset = ,
          color = NULL) + 
-  scale_fill_manual(values = c(bap_clrs, source_clrs, "Yes"="#EB8E8B", "No"="white", na.value="white")) +
+  scale_fill_manual(values = c(bap_clrs, source_clrs, "Yes"=unname(bap_clrs["G"]), "No"="white", na.value="white")) +
   theme(legend.position = "none")
 
 # Scale factor for plotting
 scalefactor <- 2
 
 # Copy plot 
-dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs/figures/FigureS1.pduG.map.png')
+dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs/figures/FigureS2.pduG.map.png')
 
 # Save plot and dev off
 dev.off()
@@ -1202,11 +1255,11 @@ gheatmap(scoary_tree,
          width = 20,
          offset = ,
          color = NULL) + 
-  scale_fill_manual(values = c(bap_clrs, source_clrs, "Yes"="#8DD3C7", "No"="white", na.value="white")) +
+  scale_fill_manual(values = c(bap_clrs, source_clrs, "Yes"=unname(bap_clrs["M"]), "No"="white", na.value="white")) +
   theme(legend.position = "none")
 
 # Copy plot 
-dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs/figures/FigureS2.pduM1.map.png')
+dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs/figures/FigureS3.pduM1.map.png')
 
 # Save plot and dev off
 dev.off()
@@ -1242,11 +1295,11 @@ gheatmap(scoary_tree,
          width = 20,
          offset = ,
          color = NULL) + 
-  scale_fill_manual(values = c(bap_clrs, source_clrs, "Yes"="#8DD3C7", "No"="white"), na.value = "#000000") +
+  scale_fill_manual(values = c(bap_clrs, source_clrs, "Yes"=unname(bap_clrs["M"]), "No"="white"), na.value = "#000000") +
   theme(legend.position = "none")
 
 # Copy plot 
-dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs/figures/FigureS3.kpsM2.map.png')
+dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs/figures/FigureS4.kpsM2.map.png')
 
 # Save plot and dev off
 dev.off()
@@ -1281,17 +1334,21 @@ gheatmap(scoary_tree,
          width = 20,
          offset = ,
          color = NULL) + 
-  scale_fill_manual(values = c(bap_clrs, source_clrs, "Yes"="#8DD3C7", "No"="white", na.value = "white")) +
+  scale_fill_manual(values = c(bap_clrs, source_clrs, "Yes"=unname(bap_clrs["M"]), "No"="white", na.value = "white")) +
   theme(legend.position = "none")
 
 # Copy plot 
-dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs/figures/FigureS4.kpsM3.map.png')
+dev.copy(png, res = 300*scalefactor, height=2480, width=3508, units = , 'outputs/figures/FigureS5.kpsM3.map.png')
 
 # Save plot and dev off
 dev.off()
 
-
 ####-----TABLES S1, S2, S3-----####
+# Add specimen type to meta
+specimen <- read_csv("data/meta/MVC_specimens.csv")
+meta <- left_join(meta, specimen, by ="Name") %>% 
+  select(Name, Source, Specimen, everything())
+
 # Write to file
 write_csv(meta, "outputs/data/TableS1_meta.csv")
 
